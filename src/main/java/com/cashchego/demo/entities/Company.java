@@ -1,7 +1,6 @@
 package com.cashchego.demo.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,42 +9,36 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_report")
-public class Report implements Serializable{
+@Table(name = "tb_company")
+public class Company implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Instant moment;
-	private Double totalIn;
-	private Double totalOut;
+	private String name;
+	private String cnpj;
 	private Double balance;
+	private Double netWorth;
 	
-	@ManyToOne // indica a associação muitas transações para 1 cliente
-	@JoinColumn(name = "client_id") // id do cliente será a chave estrangeira nesta tabela
-	private User client;
+	@OneToMany(mappedBy = "company")
+	private List<User> employees = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "report")
-	private List<Transaction> transactions = new ArrayList<>();
-	
-	public Report() {
+	public Company() {
 		super();
 	}
 
-	public Report(Long id, Instant moment, Double totalIn, Double totalOut, Double balance) {
+	public Company(Long id, String name, String cnpj, Double balance, Double netWorth) {
 		super();
 		this.id = id;
-		this.moment = moment;
-		this.totalIn = totalIn;
-		this.totalOut = totalOut;
+		this.name = name;
+		this.cnpj = cnpj;
 		this.balance = balance;
+		this.netWorth = netWorth;
 	}
 
 	public Long getId() {
@@ -56,28 +49,20 @@ public class Report implements Serializable{
 		this.id = id;
 	}
 
-	public Instant getMoment() {
-		return moment;
+	public String getName() {
+		return name;
 	}
 
-	public void setMoment(Instant moment) {
-		this.moment = moment;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Double getTotalIn() {
-		return totalIn;
+	public String getCnpj() {
+		return cnpj;
 	}
 
-	public void setTotalIn(Double totalIn) {
-		this.totalIn = totalIn;
-	}
-
-	public Double getTotalOut() {
-		return totalOut;
-	}
-
-	public void setTotalOut(Double totalOut) {
-		this.totalOut = totalOut;
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 	public Double getBalance() {
@@ -86,6 +71,14 @@ public class Report implements Serializable{
 
 	public void setBalance(Double balance) {
 		this.balance = balance;
+	}
+
+	public Double getNetWorth() {
+		return netWorth;
+	}
+
+	public void setNetWorth(Double netWorth) {
+		this.netWorth = netWorth;
 	}
 
 	@Override
@@ -101,10 +94,9 @@ public class Report implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Report other = (Report) obj;
+		Company other = (Company) obj;
 		return Objects.equals(id, other.id);
 	}
-	
 	
 	
 }

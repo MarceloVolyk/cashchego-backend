@@ -1,6 +1,7 @@
 package com.cashchego.demo.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -22,7 +23,7 @@ public class Transaction implements Serializable{
 	private Long id;
 	private String type;
 	private Double ammount;
-	private Date date;
+	private Instant moment;
 	private String cathegory;
 	
 	@ManyToOne
@@ -37,12 +38,12 @@ public class Transaction implements Serializable{
 		super();
 	}
 
-	public Transaction(Long id, String type, Double ammount, Date date, String cathegory) {
+	public Transaction(Long id, String type, Double ammount, Instant moment, String cathegory) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.ammount = ammount;
-		this.date = date;
+		this.moment = moment;
 		this.cathegory = cathegory;
 	}
 
@@ -70,12 +71,12 @@ public class Transaction implements Serializable{
 		this.ammount = ammount;
 	}
 
-	public Date getDate() {
-		return date;
+	public Instant getMoment() {
+		return this.moment;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setMoment(Instant moment) {
+		this.moment = moment;
 	}
 
 	public String getCathegory() {
