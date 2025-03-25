@@ -23,7 +23,6 @@ public class Transaction implements Serializable{
 	private Long id;
 	private String type;
 	private Double ammount;
-	private Instant moment;
 	private String cathegory;
 	
 	@ManyToOne
@@ -38,13 +37,11 @@ public class Transaction implements Serializable{
 		super();
 	}
 
-	public Transaction(Long id, String type, Double ammount, Instant moment, String cathegory) {
+	public Transaction(Long id, String type, Double ammount) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.ammount = ammount;
-		this.moment = moment;
-		this.cathegory = cathegory;
 	}
 
 	public Long getId() {
@@ -69,14 +66,6 @@ public class Transaction implements Serializable{
 
 	public void setAmmount(Double ammount) {
 		this.ammount = ammount;
-	}
-
-	public Instant getMoment() {
-		return this.moment;
-	}
-
-	public void setMoment(Instant moment) {
-		this.moment = moment;
 	}
 
 	public String getCathegory() {
