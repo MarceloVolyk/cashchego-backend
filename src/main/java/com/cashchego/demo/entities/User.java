@@ -28,13 +28,12 @@ public class User implements Serializable{
 	private String phone;
 	private String adress;
 	private String password;
-
-	
-	@OneToMany(mappedBy = "client")
-	private List<Transaction> transactions = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "client")
 	private List<Report> reports = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "client")
+	private List<Account> accounts = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name = "company_id")
