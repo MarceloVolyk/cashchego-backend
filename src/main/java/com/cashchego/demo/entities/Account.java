@@ -10,8 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "tb_account")
 public class Account {
 
 	@Id
@@ -72,6 +74,13 @@ public class Account {
 	public void setInstitution(String institution) {
 		this.institution = institution;
 	}
-    
+
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
+	}
     
 }

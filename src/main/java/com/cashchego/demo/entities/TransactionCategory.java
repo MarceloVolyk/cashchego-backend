@@ -4,9 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class TransactionCathegory {
+@Table(name = "tb_trasactionCategory")
+public class TransactionCategory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +16,11 @@ public class TransactionCathegory {
 
 	private String name;
 
-	public TransactionCathegory() {
+	public TransactionCategory() {
 		super();
 	}
 
-	public TransactionCathegory(Long id, String name) {
+	public TransactionCategory(Long id, String name) {
 		super();
 		this.id = id;
 		this.name = name;

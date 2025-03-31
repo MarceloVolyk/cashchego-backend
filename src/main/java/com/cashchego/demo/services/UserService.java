@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.cashchego.demo.entities.Account;
 import com.cashchego.demo.entities.User;
 import com.cashchego.demo.repositories.UserRepository;
 import com.cashchego.demo.services.exceptions.DatabaseException;

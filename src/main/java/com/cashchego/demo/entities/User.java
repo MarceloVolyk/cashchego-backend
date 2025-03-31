@@ -54,7 +54,7 @@ public class User implements Serializable{
 		this.adress = adress;
 		this.password = password;
 	}
-	
+
 	public User(Long id, String codUser, String name, String email, String phone, String adress,
 			String password, Company company) {
 		super();
@@ -67,7 +67,7 @@ public class User implements Serializable{
 		this.password = password;
 		this.company = company;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}

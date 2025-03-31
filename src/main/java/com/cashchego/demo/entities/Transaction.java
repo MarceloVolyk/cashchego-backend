@@ -36,7 +36,7 @@ public class Transaction implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "cathegory_id")
-    private TransactionCathegory cathegory;     // Associação com Categoria (ex: "Moradia", "Lazer")
+    private TransactionCategory category;     // Associação com Categoria (ex: "Moradia", "Lazer")
 
     @ManyToOne
     @JoinColumn(name = "account_id")
@@ -46,15 +46,13 @@ public class Transaction implements Serializable{
 		this.creationDate = LocalDateTime.now();
 	}
 
-	public Transaction(Long id, Double ammount, Report report, User client,
-			TransactionType type, TransactionCathegory cathegory, Account account) {
+	public Transaction(Long id, Double ammount,
+			TransactionType type, TransactionCategory category) {
 		this.id = id;
 		this.ammount = ammount;
 		this.creationDate = LocalDateTime.now();
-		this.report = report;
 		this.type = type;
-		this.cathegory = cathegory;
-		this.account = account;
+		this.category = category;
 	}
 
 
@@ -107,13 +105,13 @@ public class Transaction implements Serializable{
 	}
 
 
-	public TransactionCathegory getCathegory() {
-		return cathegory;
+	public TransactionCategory getCathegory() {
+		return category;
 	}
 
 
-	public void setCathegory(TransactionCathegory cathegory) {
-		this.cathegory = cathegory;
+	public void setCathegory(TransactionCategory cathegory) {
+		this.category = cathegory;
 	}
 
 
