@@ -82,5 +82,12 @@ public class Account {
 	public void setClient(User client) {
 		this.client = client;
 	}
+
+	@Override
+	public String toString() {
+		return "Account [id=" + id + ", name=" + name + ", balance=" + balance + ", institution=" + institution
+				+ ", client=" + client + "]";
+	}
     
+	
 }

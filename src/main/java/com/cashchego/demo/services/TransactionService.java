@@ -12,7 +12,10 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.cashchego.demo.dtos.TransactionDTO;
+import com.cashchego.demo.entities.Account;
 import com.cashchego.demo.entities.Transaction;
+import com.cashchego.demo.entities.enums.TransactionType;
+import com.cashchego.demo.repositories.AccountRepository;
 import com.cashchego.demo.repositories.TransactionRepository;
 import com.cashchego.demo.services.exceptions.DatabaseException;
 import com.cashchego.demo.services.exceptions.ResourceNotFoundException;
@@ -23,7 +26,10 @@ import jakarta.persistence.EntityNotFoundException;
 public class TransactionService {
 
 	@Autowired                         
-	private TransactionRepository repository; 
+	private TransactionRepository repository;
+	
+	@Autowired
+	private AccountRepository accrepo;
 	                                   
 	public List<Transaction> findAll(){       
 		return repository.findAll();
@@ -35,7 +41,31 @@ public class TransactionService {
 	}
 	
 	public Transaction insert(Transaction obj) {
-		return repository.save(obj);
+		
+		double amount = obj.getAmmount(); 
+		
+		Account acc = accrepo.findById(obj.getAccount().getId())
+				.orElseThrow(() -> new IllegalArgumentException("Account not found"));		
+	
+	    double currentBalance = acc.getBalance();
+	    double newBalance; 
+
+	    if (obj.getType() == TransactionType.EXPENSE || obj.getType() == TransactionType.TRANSFER) {
+	        newBalance = currentBalance - amount; 
+	    } else {
+	        newBalance = currentBalance + amount;
+	    }
+
+	    acc.setBalance(newBalance);
+	    
+	    obj.setBalanceAfter(newBalance);
+	    
+	    obj.setAccount(acc);
+	    Transaction savedTransaction = repository.save(obj);
+	    //savedTransaction.getAccount().setBalance(newBalance);
+	    System.out.println(obj.getAccount());
+	    return savedTransaction;
+		
 	}
 	
 	public void delete(Long id) {

@@ -26,6 +26,7 @@ public class Transaction implements Serializable{
 	private Long id;
 	private Double ammount;
 	private LocalDateTime creationDate;
+	private Double balanceAfter;
 	
 	@ManyToOne
 	@JoinColumn(name = "report_id")
@@ -84,7 +85,14 @@ public class Transaction implements Serializable{
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
+	
+	public Double getBalanceAfter() {
+		return balanceAfter;
+	}
 
+	public void setBalanceAfter(Double balanceAfter) {
+		this.balanceAfter = balanceAfter;
+	}
 
 	public Report getReport() {
 		return report;
