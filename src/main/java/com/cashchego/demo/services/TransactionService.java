@@ -1,15 +1,18 @@
 package com.cashchego.demo.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.cashchego.demo.dtos.TransactionDTO;
 import com.cashchego.demo.entities.Transaction;
-import com.cashchego.demo.entities.User;
 import com.cashchego.demo.repositories.TransactionRepository;
 import com.cashchego.demo.services.exceptions.DatabaseException;
 import com.cashchego.demo.services.exceptions.ResourceNotFoundException;
@@ -60,4 +63,25 @@ public class TransactionService {
 		entity.setAmmount(obj.getAmmount());
 		
 	}
+	
+	//Weebsocket methods
+	
+    public TransactionService(TransactionRepository transactionRepository) {
+        this.repository = transactionRepository;
+    }
+
+    public List<TransactionDTO> filtrarTransacoesPorDataECategoria(
+            LocalDate dataInicio, 
+            LocalDate dataFim, 
+            Integer categoriaId) {
+        
+        LocalDateTime inicio = dataInicio.atStartOfDay();
+        LocalDateTime fim = dataFim.plusDays(1).atStartOfDay();
+        
+        return repository
+            .findByCreationDateBetweenAndCategoryId(inicio, fim, categoriaId)
+            .stream()
+            .map(TransactionDTO::new)
+            .collect(Collectors.toList());
+    }
 }

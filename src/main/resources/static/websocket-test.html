@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste WebSocket</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+    <h1>Teste WebSocket</h1>
+    
+    <div>
+        <input type="text" id="messageInput" placeholder="Digite uma mensagem">
+        <button onclick="sendMessage()">Enviar</button>
+    </div>
+    
+    <div id="messages" style="margin-top: 20px;"></div>
+    
+    <script>
+        const socket = new SockJS('http://localhost:8080/ws');
+        const stompClient = Stomp.over(socket);
+        const messagesElement = document.getElementById('messages');
+        
+        function showMessage(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            messagesElement.appendChild(p);
+        }
+        
+        stompClient.connect({}, function(frame) {
+            showMessage('Conectado ao WebSocket!');
+            
+            // Assina o tópico de respostas
+            stompClient.subscribe('/topic/greetings', function(response) {
+                showMessage('Resposta recebida: ' + response.body);
+            });
+        }, function(error) {
+            showMessage('Erro na conexão: ' + error);
+        });
+        
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value;
+            
+            if (message) {
+                stompClient.send("/app/hello", {}, JSON.stringify(message));
+                showMessage('Mensagem enviada: ' + message);
+                input.value = '';
+            }
+        }
+    </script>
+</body>
+</html>

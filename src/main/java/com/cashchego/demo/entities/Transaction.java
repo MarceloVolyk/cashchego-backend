@@ -35,7 +35,7 @@ public class Transaction implements Serializable{
     private TransactionType type;       // Enum: RECEITA, DESPESA, TRANSFERENCIA
 
     @ManyToOne
-    @JoinColumn(name = "cathegory_id")
+    @JoinColumn(name = "category_id")
     private TransactionCategory category;     // Associação com Categoria (ex: "Moradia", "Lazer")
 
     @ManyToOne
