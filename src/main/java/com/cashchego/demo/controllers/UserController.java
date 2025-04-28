@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.cashchego.demo.entities.Account;
 import com.cashchego.demo.entities.User;
 import com.cashchego.demo.services.UserService;
 
@@ -35,6 +36,12 @@ public class UserController {
 	public ResponseEntity<User> findById(@PathVariable Long id) {  
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@GetMapping(value = "/{id}/accounts")                                    
+	public ResponseEntity<List<Account>> findAccounts(@PathVariable Long id) {  
+		List<Account> accounts = service.getUserAccountsWithTransactions(id);
+		return ResponseEntity.ok().body(accounts);
 	}
 	
 	@PostMapping

@@ -44,6 +44,11 @@ public class TransactionService {
 		
 		double amount = obj.getAmmount(); 
 		
+//		obj.setAccountIdFromJson(obj.getAccount().getId());
+		
+//		Account acc = accrepo.findById(obj.getAccountIdForJson())
+//				.orElseThrow(() -> new IllegalArgumentException("Account not found"));
+		
 		Account acc = accrepo.findById(obj.getAccount().getId())
 				.orElseThrow(() -> new IllegalArgumentException("Account not found"));		
 	

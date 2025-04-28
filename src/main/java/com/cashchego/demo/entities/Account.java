@@ -3,6 +3,8 @@ package com.cashchego.demo.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class Account {
     
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @JsonIgnoreProperties({"accounts", "reports"}) // Ignora as listas do User
     private User client;
     
     @OneToMany(mappedBy = "account")
@@ -81,6 +84,14 @@ public class Account {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 
 	@Override
